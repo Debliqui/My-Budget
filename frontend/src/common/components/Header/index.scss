@@ -1,0 +1,30 @@
+.header {
+  &__navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    &__logo {
+      display: flex;
+      align-items: center;
+      &__image {
+        max-width: 100%;
+        width: 200px;
+      }
+    }
+    &__item {
+      text-decoration: none;
+      margin-right: 0.5rem;
+      &:hover {
+        text-decoration: underline;
+      }
+      & span {
+        padding-left: 4px;
+      }
+    }
+    & a {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  }
+}

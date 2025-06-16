@@ -1,0 +1,31 @@
+.banner {
+  background-position: 0 -50px;
+
+  background-repeat: no-repeat;
+  height: 300px;
+  position: relative;
+  &__content {
+    position: relative;
+    top: 2rem;
+    width: 200px;
+    background: white;
+    padding: 2rem;
+    text-align: left;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 920px) {
+  .banner {
+    height: 400px;
+    background-position: 0% 33%;
+    background-size: cover;
+    &__content {
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      width: 300px;
+      margin: 2rem;
+    }
+  }
+}

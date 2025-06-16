@@ -1,0 +1,30 @@
+.edit {
+  border: none;
+  border-radius: 10px;
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  & h2 {
+    color: black;
+  }
+  &__wrapper {
+    display: flex;
+    text-align: left;
+    margin-bottom: 1rem;
+    gap: 16px;
+    & input {
+      border-radius: 4px;
+      border: 1px gray solid;
+      font-size: 1rem;
+    }
+  }
+  &__buttons {
+    display: flex;
+    gap: 8px;
+  }
+  & .bg-grey {
+    background-color: grey;
+    filter: opacity(0.5);
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,25 @@
+<type>: <short summary>
+
+# Optional longer description:
+
+# Explain the "why" behind the change and any context.
+
+# Leave one empty line between the header and the body.
+
+# Common types:
+
+# feat - a new feature
+
+# fix - a bug fix
+
+# chore - maintenance, tooling or non-code changes
+
+# refactor - restructuring code without changing behavior
+
+# docs - documentation update
+
+# test - adding or fixing tests
+
+# Example:
+
+# feat: add recurring transactions to dashboard

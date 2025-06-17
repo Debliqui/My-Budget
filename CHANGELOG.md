@@ -21,3 +21,16 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Manually resolved 3 high-severity vulnerabilities in `semver` via overrides
+
+## [0.1.1] - 2025-06-24
+
+### Changed
+
+- Standardized folder structure for the backend:
+  - Confirmed separation between `routes`, `controllers`, `services`, and `models`
+  - Grouped all logic under `app/` for modular clarity
+- Added `.gitignore` to properly exclude:
+  - `node_modules/`, `.env`, `*.log`, `data/*.json`, etc.
+- Reformatted codebase using Prettier and ESLint auto-fix
+
+[0.1.1]: https://github.com/Debliqui/My-Budget/compare/v0.1.0...v0.1.1

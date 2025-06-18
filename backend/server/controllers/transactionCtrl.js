@@ -61,18 +61,15 @@ module.exports.updateOneTransaction = (req, res, next) => {
     })
 }
 module.exports.deleteOneTransaction = (req, res, next) => {
-  const resultat = Transaction.deleteOne({ _id: req.params.id })
+  Transaction.deleteOne({ _id: req.params.id })
     .then(() => {
-      if (result.deletedCount === 0) {
-        return res.status(404).json({ message: "Transaction not found." })
-      }
       res.status(200).json({
         message: "Transaction deleted !",
       })
     })
     .catch((error) => {
-      res.status(500).json({
-        error: error,
+      res.status(404).json({
+        error,
       })
     })
 }

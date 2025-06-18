@@ -34,3 +34,17 @@ All notable changes to this project will be documented in this file.
 - Reformatted codebase using Prettier and ESLint auto-fix
 
 [0.1.1]: https://github.com/Debliqui/My-Budget/compare/v0.1.0...v0.1.1
+
+## [0.2.0] - 2025-06-25
+
+### Added
+
+- Complete implementation of the `transactions` module connected to MongoDB
+  - POST, GET, GET/:id, PUT, DELETE
+  - Mongoose model with validations (`title`, `amount`, `type`)
+  - Automatic date cleaning (`00:00 UTC`)
+- Updated Swagger documentation (paths + models)
+
+### Changed
+
+- Controller structure: clarified business logic, precise HTTP statuses

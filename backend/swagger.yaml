@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: Bank Argent API documentation
+  title: My Budget API documentation
   description: Contains all available API endpoints in this codebase
   version: "1.0.0"
   termsOfService: "http://swagger.io/terms/"
@@ -9,6 +9,111 @@ basePath: /api/v1
 schemes:
   - http
 paths:
+  /transactions:
+    get:
+      tags:
+        - Transactions Module
+      summary: Get all Transactions
+      description: Return all transactions from the database
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: List of transactions
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid request
+        "500":
+          description: Internal Server Error
+    post:
+      tags:
+        - Transactions Module
+      summary: Create a new Transaction
+      description: Creates and stores a new transaction
+      parameters:
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Transaction created successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+  /transactions/{id}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Get One transaction by ID
+      description: Fetch a single transaction based on its unique ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: MongoDB ObjectID of the transaction
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction retrieved
+          schema:
+            $ref: "#/definitions/Transaction"
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+        - Transactions Module
+      summary: Update a transaction
+      description: Update the fields of a transaction by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction updated Successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - Transactions Module
+      summary: Delete a transaction
+      description: Remove a transaction from the database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction deleted
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
   /user/login:
     post:
       tags:
@@ -107,6 +212,42 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
+  Transaction:
+    type: object
+    required:
+      - title
+      - amount
+      - type
+    properties:
+      title:
+        type: string
+        example: "Loyer Juin 2025"
+        description: Title of the transaction
+      amount:
+        type: number
+        example: -1450
+        description: Amount of the transaction, can be negative or positive
+      type:
+        type: string
+        enum: [income, expense]
+        example: "expense"
+        description: Type of transaction
+      date:
+        type: string
+        format: date-time
+        example: "2025-06-30T14:07:00.000Z"
+        description: ISO 8601 date format
+      category:
+        type: string
+        example: "loyer"
+        description: Category label of the transaction
+      note:
+        type: string
+        example: "Dernier loyer de la saison"
+        description: Optional comment
+      userId:
+        type: string
+        description: Owner user ID
   User:
     properties:
       email:

@@ -6,14 +6,14 @@ export const getUserProfile = createAsyncThunk(
   async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/api/v1/user/profile",
+        "http://localhost:3001/api/v1/auth/profile",
         {
           method: "GET",
           headers: { Authorization: `Bearer ${isUserLoggedIn}` },
         }
       )
       const data = await response.json()
-      return data.body
+      return data
     } catch (error) {
       {
         {
@@ -25,12 +25,12 @@ export const getUserProfile = createAsyncThunk(
   }
 )
 
-export const editUserName = createAsyncThunk(
-  "user/editUserName",
+export const updateUserInformation = createAsyncThunk(
+  "user/updateUserInformation",
   async (user) => {
     try {
       const response = await fetch(
-        "http://localhost:3001/api/v1/user/profile",
+        "http://localhost:3001/api/v1/auth/profile",
         {
           method: "PUT",
           headers: {
@@ -51,6 +51,7 @@ export const editUserName = createAsyncThunk(
 )
 
 const initialState = {
+  email: null,
   firstName: null,
   lastName: null,
   userName: null,
@@ -64,17 +65,19 @@ const userSlice = createSlice({
     builder.addCase(getUserProfile.fulfilled, (state, action) => {
       return {
         ...state,
+        email: action.payload.email,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         userName: action.payload.userName,
       }
     })
-    builder.addCase(editUserName.fulfilled, (state, action) => {
-      state.userName = action.payload.userName
+    builder.addCase(updateUserInformation.fulfilled, (state, action) => {
+      return { ...state, ...action.payload }
     })
   },
 })
 
+export const selectEmail = (state) => state.user.email
 export const selectFirstName = (state) => state.user.firstName
 export const selectLastName = (state) => state.user.lastName
 export const selectUserName = (state) => state.user.userName

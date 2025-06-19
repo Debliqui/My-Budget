@@ -1,19 +1,28 @@
 import { useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {
+  selectEmail,
   selectUserName,
   selectFirstName,
   selectLastName,
 } from "../../../features/user/userSlice"
-import { getUserProfile, editUserName } from "../../../features/user/userSlice"
+import {
+  getUserProfile,
+  updateUserInformation,
+} from "../../../features/user/userSlice"
 import "./index.scss"
+import Field from "../Field"
 
 export default function EditUser() {
   const dispatch = useDispatch()
+  const email = useSelector(selectEmail)
   const userName = useSelector(selectUserName)
   const firstName = useSelector(selectFirstName)
   const lastName = useSelector(selectLastName)
 
+  const emailRef = useRef(null)
+  const firstNameRef = useRef(null)
+  const lastNameRef = useRef(null)
   const modalRef = useRef(null)
   const userNameRef = useRef(null)
 
@@ -21,9 +30,14 @@ export default function EditUser() {
     event.preventDefault()
     const user = {
       userName: userNameRef.current.value,
+      email: emailRef.current.value,
+      firstName: firstNameRef.current.value,
+      lastName: lastNameRef.current.value,
     }
-    dispatch(editUserName(user))
-    modalRef.current.close()
+    dispatch(updateUserInformation(user)).then(() => {
+      dispatch(getUserProfile())
+      modalRef.current.close()
+    })
   }
 
   useEffect(() => {
@@ -46,36 +60,39 @@ export default function EditUser() {
       <dialog ref={modalRef} className="edit">
         <h2>Edit user info</h2>
         <form onSubmit={handleSubmit}>
-          <div className="edit__wrapper">
-            <label htmlFor="userName">User name</label>
-            <input
-              type="text"
-              id="userName"
-              placeholder={userName}
-              maxLength="15"
-              ref={userNameRef}
-            />
-          </div>
-          <div className="edit__wrapper">
-            <label htmlFor="firstName">First name</label>
-            <input
-              className="bg-grey"
-              type="text"
-              id="firstName"
-              value={firstName}
-              readOnly
-            />
-          </div>
-          <div className="edit__wrapper">
-            <label htmlFor="lastName">Last name</label>
-            <input
-              className="bg-grey"
-              type="text"
-              id="lastName"
-              value={lastName}
-              readOnly
-            />
-          </div>
+          <Field
+            type="email"
+            name="email"
+            label="Email"
+            defaultValue={email}
+            ref={emailRef}
+            required={false}
+          />
+          <Field
+            type="text"
+            name="userName"
+            label="Pseudo"
+            required={false}
+            defaultValue={userName}
+            maxLength="15"
+            ref={userNameRef}
+          />
+          <Field
+            type="text"
+            name="firstName"
+            label="Prénom"
+            required={false}
+            defaultValue={firstName}
+            ref={firstNameRef}
+          />
+          <Field
+            type="text"
+            name="lastName"
+            label="Nom"
+            required={false}
+            defaultValue={lastName}
+            ref={lastNameRef}
+          />
           <div className="edit__buttons">
             <button className="sign-in-button" type="submit">
               Save

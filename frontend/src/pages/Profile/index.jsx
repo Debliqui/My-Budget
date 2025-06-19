@@ -27,7 +27,7 @@ export default function Profile() {
     <>
       <Header />
       <main className="main bg-dark">
-        {firstName === null ? (
+        {firstName === null || firstName === undefined ? (
           <>
             <section className="error-connect">
               <h2>Your are not connect</h2>

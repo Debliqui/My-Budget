@@ -2,13 +2,14 @@ import { useEffect, useRef } from "react"
 import "./index.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../../features/authentication/AuthenticationAction"
+import Field from "../Field"
 
 export default function Form() {
   const dispatch = useDispatch()
   const error = useSelector((state) => state.authentication.error)
   const rememberMeInputRef = useRef(null)
   const emailRef = useRef(null)
-  const passewordRef = useRef(null)
+  const passwordRef = useRef(null)
   const messageErrorRef = useRef(null)
 
   const rememberMe = () => {
@@ -21,7 +22,7 @@ export default function Form() {
     rememberMe()
     const user = {
       email: emailRef.current.value,
-      password: passewordRef.current.value,
+      password: passwordRef.current.value,
     }
     dispatch(loginUser(JSON.stringify(user)))
   }
@@ -37,19 +38,20 @@ export default function Form() {
   return (
     <form onSubmit={handleSubmit}>
       <p className="messageError" ref={messageErrorRef} />
-      <div className="input-wrapper">
-        <label htmlFor="email">Username</label>
-        <input type="text" id="email" required="required" ref={emailRef} />
-      </div>
-      <div className="input-wrapper">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          required="required"
-          ref={passewordRef}
-        />
-      </div>
+      <Field
+        type="email"
+        name="email"
+        label="Email"
+        ref={emailRef}
+        required={true}
+      />
+      <Field
+        type="password"
+        name="password"
+        label="Mot de passe"
+        ref={passwordRef}
+        required={true}
+      />
       <div className="input-remember">
         <input type="checkbox" id="remember-me" ref={rememberMeInputRef} />
         <label htmlFor="remember-me">Remember me</label>

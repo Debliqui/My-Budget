@@ -48,3 +48,29 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Controller structure: clarified business logic, precise HTTP statuses
+
+## [v0.3.0] - 2025-06-19
+
+### ✨ Features
+
+- Refactored complete `User` module (`signup`, `login`, `profile`, `update`)
+- Implemented JWT-based authentication middleware (`auth.js`)
+- Added password strength validation with `zxcvbn`
+- Applied `express-validator` for structured input validation
+- Created reusable `handleMongooseError()` utility for unified error responses
+- Enforced user ownership on all `transactions` routes (`userId` association)
+- Secured `POST`, `GET`, `PUT`, and `DELETE /transactions` by authenticated user
+- Introduced defensive middleware `requireUser` to prevent unauthorized access
+- Added rate limiting on login (`express-rate-limit`)
+- Added symbolic `/logout` endpoint
+
+### 📘 Documentation
+
+- Updated Swagger docs for `/signup`, `/login`, `/logout`, `/profile`, and `/transactions`
+- Documented input schemas and secured endpoints with JWT requirement
+
+### 🔧 Internal
+
+- Refactored `transactionCtrl.js` to ensure clean error handling and authorization checks
+- Created centralized input validator `middleware/validator.js`
+- Added custom regex for `userName` and email format in Mongoose schema

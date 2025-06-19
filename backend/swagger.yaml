@@ -11,6 +11,8 @@ schemes:
 paths:
   /transactions:
     get:
+      security:
+        - Bearer: []
       tags:
         - Transactions Module
       summary: Get all Transactions
@@ -29,6 +31,8 @@ paths:
         "500":
           description: Internal Server Error
     post:
+      security:
+        - Bearer: []
       tags:
         - Transactions Module
       summary: Create a new Transaction
@@ -50,6 +54,8 @@ paths:
           description: Internal Server Error
   /transactions/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Transactions Module
       summary: Get One transaction by ID
@@ -72,6 +78,8 @@ paths:
         "500":
           description: Internal Server Error
     put:
+      security:
+        - Bearer: []
       tags:
         - Transactions Module
       summary: Update a transaction
@@ -96,6 +104,8 @@ paths:
         "500":
           description: Internal Server Error
     delete:
+      security:
+        - Bearer: []
       tags:
         - Transactions Module
       summary: Delete a transaction
@@ -114,84 +124,94 @@ paths:
           description: Transaction not found
         "500":
           description: Internal Server Error
-  /user/login:
+  /auth/signup:
     post:
       tags:
-        - User Module
-      summary: Login
-      description: API for Login
+        - Auth Module
+      summary: User registration
+      description: Creates a new user account with a hashed password
       parameters:
         - in: body
-          name: body
-          description: Login Payload
+          name: user
           required: true
           schema:
-            $ref: "#/definitions/Login"
+            $ref: "#/definitions/UserSignup"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: User created successfully
+        "400":
+          description: Email already in use or invalid format
+        "500":
+          description: Internal server error
+
+  /auth/login:
+    post:
+      tags:
+        - Auth Module
+      summary: User login
+      description: Authenticates a user and returns a JWT token
+      parameters:
+        - in: body
+          name: credentials
+          required: true
+          schema:
+            $ref: "#/definitions/UserLogin"
       produces:
         - application/json
       responses:
         "200":
-          description: Login Successfully
-          schema:
-            $ref: "#/definitions/LoginResponse"
-        "400":
-          description: Invalid Fields
+          description: Login successful
+        "401":
+          description: Incorrect credentials
         "500":
-          description: Internal Server Error
-  /user/signup:
+          description: Internal server error
+
+  /auth/logout:
     post:
       tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
-      parameters:
-        - in: body
-          name: body
-          description: Signup Payload
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      produces:
-        - application/json
+        - Auth Module
+      summary: Logout user
+      description: Logs out the currently authenticated user by clearing the client-side token
+      security:
+        - Bearer: []
       responses:
         "200":
-          description: Signup Successfully
-          schema:
-            $ref: "#/definitions/ApiResponse"
-        "400":
-          description: Invalid Fields
-        "500":
-          description: Internal Server Error
-  /user/profile:
+          description: Logout successful
+        "401":
+          description: Unauthorized or token missing
+
+  /auth/profile:
     get:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
-      #produces:
-      # - application/json
+        - Auth Module
+      summary: Get user profile
+      description: Returns the profile information of the currently authenticated user
+      produces:
+        - application/json
       responses:
         "200":
-          description: User profile retrieved successully
+          description: User profile data
           schema:
-            $ref: "#/definitions/ApiResponse"
-        "400":
-          description: Invalid Fields
+            $ref: "#/definitions/UserProfile"
+        "401":
+          description: JWT token missing or invalid
         "500":
-          description: Internal Server Error
+          description: Internal server error
+
     put:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
+        - Auth Module
+      summary: Update user profile
+      description: Updates the `userName`, `firstName`, and `lastName` of the authenticated user
       parameters:
         - in: body
-          name: body
-          description: Update user profile attributes
+          name: user
           required: true
           schema:
             $ref: "#/definitions/UserProfile"
@@ -199,13 +219,15 @@ paths:
         - application/json
       responses:
         "200":
-          description: User profile retrieved successully
+          description: Profile updated successfully
           schema:
-            $ref: "#/definitions/ApiResponse"
+            $ref: "#/definitions/UserProfile"
         "400":
-          description: Invalid Fields
+          description: Invalid input data
+        "401":
+          description: JWT token missing or invalid
         "500":
-          description: Internal Server Error
+          description: Internal server error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -248,52 +270,43 @@ definitions:
       userId:
         type: string
         description: Owner user ID
-  User:
+  UserSignup:
+    type: object
+    required:
+      - email,
+      - password,
+      - userName
     properties:
       email:
         type: string
-        description: user email
       password:
         type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
       userName:
         type: string
-        description: user public name
-  Login:
+      firstName:
+        type: string
+      lastName:
+        type: string
+
+  UserLogin:
+    type: object
+    required:
+      - email,
+      - password
     properties:
       email:
         type: string
-        description: user email
       password:
         type: string
-        description: user password
-  ApiResponse:
-    type: object
-    properties:
-      status:
-        type: integer
-      message:
-        type: string
-      body:
-        type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
-  LoginResponse:
-    type: object
-    properties:
-      token:
-        type: string
+
   UserProfile:
     type: object
     properties:
+      email:
+        type: string
       userName:
+        type: string
+      firstName:
+        type: string
+      lastName:
         type: string

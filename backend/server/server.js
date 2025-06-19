@@ -11,6 +11,7 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 const transactionRoutes = require("./routes/transactions.routes")
+const userRoutes = require("./routes/user.routes")
 
 // Connect to the database
 connectDB()
@@ -27,7 +28,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // Handle custom routes
 app.use("/api/v1/transactions", transactionRoutes)
-// app.use("/api/v1/user", require("./routes/userRoutes"))
+app.use("/api/v1/auth", userRoutes)
 
 // API Documentation
 if (process.env.NODE_ENV !== "production") {

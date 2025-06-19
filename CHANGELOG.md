@@ -74,3 +74,17 @@ All notable changes to this project will be documented in this file.
 - Refactored `transactionCtrl.js` to ensure clean error handling and authorization checks
 - Created centralized input validator `middleware/validator.js`
 - Added custom regex for `userName` and email format in Mongoose schema
+
+## [v0.3.1] - 2025-06-19
+
+### Added
+
+- Implemented editable user profile modal with GET/PUT requests
+- Integrated authentication flows: login, signup, and secure token handling
+- Redux store connected to user profile state (email, userName, firstName, lastName)
+
+### Changed
+
+- Refactored frontend form structure for stability and clarity
+- Creation of a Field component to manage form inputs
+- Updated inputs in editUser to use defaultValue

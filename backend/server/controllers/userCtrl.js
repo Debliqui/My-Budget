@@ -27,7 +27,16 @@ exports.signup = (req, res) => {
       })
       user
         .save()
-        .then(() => res.status(201).json({ message: "User created !" }))
+        .then((savedUser) => {
+          const token = jwt.sign(
+            { userId: savedUser._id },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "24h",
+            }
+          )
+          return res.status(201).json({ token })
+        })
         .catch((err) => {
           const { status, errors } = handleMongooseError(err)
           return res.status(status).json({ errors })

@@ -88,3 +88,14 @@ All notable changes to this project will be documented in this file.
 - Refactored frontend form structure for stability and clarity
 - Creation of a Field component to manage form inputs
 - Updated inputs in editUser to use defaultValue
+
+## [v0.3.2] – 2025-06-20
+
+### ✨ Added
+
+- Auto-login after successful signup via direct token return from backend
+
+### 🔧 Changed
+
+- Modified backend `/signup` response to include JWT token
+- Updated frontend flow to store token and redirect without requiring manual login

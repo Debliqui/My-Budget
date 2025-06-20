@@ -50,7 +50,6 @@ export const createUser = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data.token)
         window.sessionStorage.setItem("keys", data.token)
         dispatch(setAccess())
         window.location.href = "/profile"

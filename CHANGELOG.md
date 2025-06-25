@@ -51,7 +51,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.3.0] - 2025-06-19
 
-### ✨ Features
+### Features
 
 - Refactored complete `User` module (`signup`, `login`, `profile`, `update`)
 - Implemented JWT-based authentication middleware (`auth.js`)
@@ -64,12 +64,12 @@ All notable changes to this project will be documented in this file.
 - Added rate limiting on login (`express-rate-limit`)
 - Added symbolic `/logout` endpoint
 
-### 📘 Documentation
+### Documentation
 
 - Updated Swagger docs for `/signup`, `/login`, `/logout`, `/profile`, and `/transactions`
 - Documented input schemas and secured endpoints with JWT requirement
 
-### 🔧 Internal
+### Internal
 
 - Refactored `transactionCtrl.js` to ensure clean error handling and authorization checks
 - Created centralized input validator `middleware/validator.js`
@@ -91,11 +91,23 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.3.2] – 2025-06-20
 
-### ✨ Added
+### Added
 
 - Auto-login after successful signup via direct token return from backend
 
-### 🔧 Changed
+### Changed
 
 - Modified backend `/signup` response to include JWT token
 - Updated frontend flow to store token and redirect without requiring manual login
+
+## [v0.3.3] - 2025-06-25
+
+### Added
+
+- Validation utils for input fields
+- Application of error message highlighting below input fields
+- Password confirmation field
+
+## Changed
+
+- Additional props added to the Field component

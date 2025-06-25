@@ -1,3 +1,5 @@
+import { NavLink } from "react-router"
+
 import Footer from "../../common/components/Footer"
 import FormSignup from "../../common/components/FormSignup"
 import Header from "../../common/components/Header"
@@ -13,6 +15,9 @@ export default function CreateUser() {
           <i className="fa fa-user-circle"></i>
           <h1>Inscription</h1>
           <FormSignup />
+          <p>
+            Déjà un compte ? <NavLink to="/login">Se connecter</NavLink>
+          </p>
         </section>
       </main>
       <Footer />
